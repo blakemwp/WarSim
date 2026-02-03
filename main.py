@@ -54,7 +54,6 @@ def main():
     print("  1 or A: Ace    |  2 or D: Deuce  |  3-9: Number")
     print("  T: 10          |  J: Jack        |  Q: Queen    |  K: King")
     print("\nExample: K2T4J59 = King, 2, 10, 4, Jack, 5, 9")
-    print("\n*** Enter 'R' to randomly deal from a full 52-card deck ***")
     print("-" * 50 + "\n")
     
     # Get player names
