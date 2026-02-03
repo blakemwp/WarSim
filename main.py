@@ -49,12 +49,7 @@ def main():
     """Main entry point for the War card game."""
     print("=" * 50)
     print("           WAR CARD GAME SIMULATOR")
-    print("=" * 50)
-    print("\nCard notation:")
-    print("  1 or A: Ace    |  2 or D: Deuce  |  3-9: Number")
-    print("  T: 10          |  J: Jack        |  Q: Queen    |  K: King")
-    print("\nExample: K2T4J59 = King, 2, 10, 4, Jack, 5, 9")
-    print("-" * 50 + "\n")
+    print("=" * 50 + "\n")
     
     # Get player names
     name1 = get_player_name(1)
@@ -75,6 +70,11 @@ def main():
         else:
             print("Invalid selection. Please enter 'G' for Game mode or 'Q' for Quick mode.\n")
     
+    print("\nCard notation:")
+    print("  1 or A: Ace    |  2 or D: Deuce  |  3-9: Number")
+    print("  T: 10          |  J: Jack        |  Q: Queen    |  K: King")
+    print("\nExample: K2T4J59 = King, 2, 10, 4, Jack, 5, 9")
+    print("-" * 50 + "\n")
     # Check for random dealing
     first_input = input(f"Enter {name1}'s hand (or 'R' for random deal): ").strip().upper()
     
