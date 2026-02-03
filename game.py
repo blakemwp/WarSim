@@ -84,34 +84,55 @@ def play_round(p1: Player, p2: Player, round_num: int, game_mode: bool = False) 
             print("  ** I DECLARE WAR! **")
             if game_mode:
                 time.sleep(DELAY_WAR_DECLARE)
-            print("  ** Each player puts 3 cards face down... **")
             
-            # Each player puts 3 cards face down, then compare the 4th
+            # Check how many cards each player has available for war
+            p1_available = p1.total_cards()
+            p2_available = p2.total_cards()
+            
+            # Determine how many face-down cards each player can place (max 3)
+            # Players need at least 1 card for the final comparison
+            p1_facedown = min(3, max(0, p1_available - 1))
+            p2_facedown = min(3, max(0, p2_available - 1))
+            
+            if p1_facedown < 3 or p2_facedown < 3:
+                if p1_available == 0 and p2_available == 0:
+                    print("\n  Both players have no cards left! It's a draw!")
+                    return False
+                elif p1_available == 0:
+                    print(f"\n  {p1.name} has no cards for war! {p2.name} wins!")
+                    return False
+                elif p2_available == 0:
+                    print(f"\n  {p2.name} has no cards for war! {p1.name} wins!")
+                    return False
+                
+                # At least one player has limited cards
+                if p1_facedown < 3:
+                    print(f"  ** {p1.name} only has {p1_available} card(s) left - playing final card! **")
+                if p2_facedown < 3:
+                    print(f"  ** {p2.name} only has {p2_available} card(s) left - playing final card! **")
+            else:
+                print("  ** Each player puts 3 cards face down... **")
+            
+            # Each player puts their face-down cards
             war_cards_1 = ""
             war_cards_2 = ""
             
-            for i in range(3):
-                c1 = p1.draw_card()
-                c2 = p2.draw_card()
-                
-                if c1 is None and c2 is None:
-                    print("\n  Both players ran out of cards during war! It's a draw!")
-                    return False
-                elif c1 is None:
-                    print(f"\n  {p1.name} ran out of cards during war!")
-                    print(f"  {p2.name} claims the pot and wins the game!")
-                    return False
-                elif c2 is None:
-                    print(f"\n  {p2.name} ran out of cards during war!")
-                    print(f"  {p1.name} claims the pot and wins the game!")
-                    return False
-                
-                war_cards_1 += c1
-                war_cards_2 += c2
+            for i in range(max(p1_facedown, p2_facedown)):
+                if i < p1_facedown:
+                    c1 = p1.draw_card()
+                    if c1:
+                        war_cards_1 += c1
+                if i < p2_facedown:
+                    c2 = p2.draw_card()
+                    if c2:
+                        war_cards_2 += c2
             
             pot += war_cards_1 + war_cards_2
-            print(f"  {p1.name}'s face-down cards: {display_hand(war_cards_1)}")
-            print(f"  {p2.name}'s face-down cards: {display_hand(war_cards_2)}")
+            
+            if war_cards_1:
+                print(f"  {p1.name}'s face-down cards: {display_hand(war_cards_1)}")
+            if war_cards_2:
+                print(f"  {p2.name}'s face-down cards: {display_hand(war_cards_2)}")
             if game_mode:
                 time.sleep(DELAY_WAR_CARDS)
             print(f"\n  Total cards in pot: {len(pot)}")
