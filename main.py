@@ -61,11 +61,11 @@ def main():
         mode_input = input("Select mode - [G]ame (with pauses) or [Q]uick (instant): ").strip().upper()
         if mode_input in ('G', 'GAME'):
             game_mode = True
-            print("  >> Game mode selected\n")
+            print("\n  >> Game mode selected")
             break
         elif mode_input in ('Q', 'QUICK'):
             game_mode = False
-            print("  >> Quick mode selected\n")
+            print("\n  >> Quick mode selected")
             break
         else:
             print("Invalid selection. Please enter 'G' for Game mode or 'Q' for Quick mode.\n")
